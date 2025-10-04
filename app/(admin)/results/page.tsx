@@ -36,7 +36,7 @@ export default function Results() {
       // Generate mock results based on risk factors
       const mockResults: StageResult[] = parsedStages.map((stage: any) => {
         let riskPercentage = 20;
-        let notes = [];
+        const notes:any[] = [];
 
         if (stage.risks.includes("Complicated Design")) riskPercentage += 20;
         if (stage.risks.includes("Bad Ground Conditions")) riskPercentage += 15;
