@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,7 +14,7 @@ interface StageResult {
   notes: string;
 }
 
-export default function Results() {
+function ResultsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(true);
@@ -227,5 +227,23 @@ export default function Results() {
         </Card>
       </div>
     </>
+  );
+}
+
+export default function Results() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center space-y-4">
+          <Loader2 className="h-12 w-12 animate-spin text-app-primary mx-auto" />
+          <div>
+            <h2 className="text-xl font-semibold text-foreground">Loading...</h2>
+            <p className="text-muted-foreground mt-2">Preparing your results</p>
+          </div>
+        </div>
+      </div>
+    }>
+      <ResultsContent />
+    </Suspense>
   );
 }
